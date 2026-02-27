@@ -1,0 +1,66 @@
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+
+# Firebase
+firebase/google-services.json
+firebase/GoogleService-Info.plist
+firebase/firebase-config.json
+
+# FlutterFlow
+flutterflow/build/
+flutterflow/.dart_tool/
+flutterflow/.flutter-plugins
+flutterflow/.flutter-plugins-dependencies
+flutterflow/.packages
+flutterflow/pubspec.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Secrets
+*.key
+*.pem
+*.p12
+secrets/
+credentials/
+
+# Logs
+*.log
+logs/
+
+# Testing
+coverage/
+.coverage
+htmlcov/
+
+# Vercel
+.vercel

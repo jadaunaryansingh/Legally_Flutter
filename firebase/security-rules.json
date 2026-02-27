@@ -1,0 +1,85 @@
+{
+  "rules": {
+    "chats": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid",
+        ".validate": "auth != null",
+        "$chatId": {
+          "messages": {
+            ".validate": "newData.isString() || newData.hasChildren()",
+            "$messageIndex": {
+              "role": {
+                ".validate": "newData.isString() && (newData.val() === 'user' || newData.val() === 'assistant')"
+              },
+              "content": {
+                ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 10000"
+              },
+              "timestamp": {
+                ".validate": "newData.isNumber()"
+              }
+            }
+          },
+          "title": {
+            ".validate": "newData.isString() && newData.val().length <= 100"
+          },
+          "createdAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "updatedAt": {
+            ".validate": "newData.isNumber()"
+          }
+        }
+      }
+    },
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid",
+        ".validate": "auth != null",
+        "email": {
+          ".validate": "newData.isString() && newData.val().matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$/)"
+        },
+        "displayName": {
+          ".validate": "newData.isString() && newData.val().length <= 100"
+        },
+        "photoURL": {
+          ".validate": "newData.isString()"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "lastLoginAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "bookmarks": {
+          "$sectionId": {
+            "section": {
+              ".validate": "newData.isString()"
+            },
+            "title": {
+              ".validate": "newData.isString()"
+            },
+            "description": {
+              ".validate": "newData.isString()"
+            },
+            "savedAt": {
+              ".validate": "newData.isNumber()"
+            }
+          }
+        },
+        "stats": {
+          "totalQueries": {
+            ".validate": "newData.isNumber()"
+          },
+          "sectionsViewed": {
+            ".validate": "newData.isNumber()"
+          },
+          "daysActive": {
+            ".validate": "newData.isNumber()"
+          }
+        }
+      }
+    }
+  }
+}
