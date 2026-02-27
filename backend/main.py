@@ -5,6 +5,7 @@ FastAPI server with RAG-lite for Bharatiya Nyaya Sanhita, 2023
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 import json
 import os
@@ -212,8 +213,18 @@ Provide a comprehensive legal analysis based STRICTLY on the Bharatiya Nyaya San
 
 # API Endpoints
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def root():
+    """Serve the HTML testing interface"""
+    html_path = os.path.join(os.path.dirname(__file__), "index.html")
+    try:
+        with open(html_path, "r", encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        return HTMLResponse(content="<h1>Legally API</h1><p>API is running but index.html not found</p>", status_code=200)
+
+@app.get("/health")
+async def health():
     """API health check"""
     return {
         "status": "online",
