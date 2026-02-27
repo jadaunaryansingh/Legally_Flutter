@@ -3,10 +3,21 @@
   "builds": [
     {
       "src": "backend/main.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb"
+      }
     }
   ],
   "routes": [
+    {
+      "src": "/health",
+      "dest": "backend/main.py"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "backend/main.py"
+    },
     {
       "src": "/(.*)",
       "dest": "backend/main.py"
