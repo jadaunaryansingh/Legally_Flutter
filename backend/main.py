@@ -87,11 +87,25 @@ def search_bns_sections(query: str, limit: int = 5) -> List[Dict]:
     query_lower = query.lower()
     results = []
     
+    # Check if user is asking for a specific section number
+    import re
+    section_match = re.search(r'\b(\d+)\b', query)
+    specific_section = section_match.group(1) if section_match else None
+    
     for section_id, section_data in BNS_DATABASE.items():
         score = 0
+        section_number = section_data.get("section", "")
         title = section_data.get("title", "").lower()
         description = section_data.get("description", "").lower()
         category = section_data.get("category", "").lower()
+        
+        # HIGHEST PRIORITY: Direct section number match
+        if specific_section and section_number == specific_section:
+            score += 100  # Very high priority for exact section match
+        
+        # Check if section number appears in query
+        if section_number in query_lower:
+            score += 50
         
         # Scoring based on keyword matches
         if query_lower in title:
